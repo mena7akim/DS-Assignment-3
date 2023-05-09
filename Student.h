@@ -2,6 +2,7 @@
 #define DS_ASSIGNMENT_3_STUDENT_H
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 class Student {
@@ -74,6 +75,15 @@ public:
 
     bool operator==(const Student &stud) const {
         return this->ID == stud.ID;
+    }
+
+    void printStudent() const {
+        cout << string(31, '-') << '\n';
+        cout << "| Name: " << name << setw(24 - name.size()) << "|\n";
+        cout << "| ID: " << ID << setw(26 - to_string(ID).size()) << "|\n";
+        cout << "| Department: " << department << setw(18 - department.size()) << "|\n";
+        cout << "| GPA: " << gpa << setw(30 - to_string(gpa).size()) << "|\n";
+        cout << string(31, '-') << '\n';
     }
 
     friend istream& operator>>(istream& in, Student& stud) {
