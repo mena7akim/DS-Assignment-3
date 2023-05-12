@@ -1,7 +1,11 @@
+
+#include <iostream>
 #include "Application.h"
 
-int main(){
+using namespace std;
+int main()
+{
+
     Application app;
     app.run();
-
 }

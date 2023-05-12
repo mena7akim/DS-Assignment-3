@@ -1,21 +1,26 @@
 #ifndef CMAKE_TESTAPP_APPLICATION_H
 #define CMAKE_TESTAPP_APPLICATION_H
-
+#include <iostream>
 #include <fstream>
 #include "maxHeap.h"
 #include "minHeap.h"
 #include "BST.h"
+#include "AVL.h"
 
+
+using namespace std;
 class Application {
     maxHeap MaxHeap;
     minHeap MinHeap;
     BST bst;
+    AVL avl;
 public:
     Application() {
         ifstream myFile("C:\\Users\\over-\\CLionProjects\\DS-Assignment-3\\cmake-build-debug\\students.txt");
         int cnt = 0;
         string line;
         Student stud;
+        AVLNode* node = NULL;
         while(getline(myFile, line)){
             if(!cnt){
                 cnt++;
@@ -27,6 +32,7 @@ public:
                     MaxHeap.push(stud);
                     MinHeap.push(stud);
                     bst.insert(stud);
+                    avl.insert(node, stud.getId());
                     break;
                 case 1:
                     stud.setId(stoi(line));
@@ -57,7 +63,7 @@ public:
                 case 1:
                     while(option != 5){
                         cout << "Choose one of the following options:\n"
-                                "\t1. Add student \n"
+                                "\t1. Add student\n"
                                 "\t2. Remove student\n"
                                 "\t3. Search student\n"
                                 "\t4. Print All (sorted by id)\n"
@@ -79,6 +85,29 @@ public:
                     }
                     break;
                 case 2:
+                    while (option != 5)
+                    {
+                        cout << "Choose one of the following options:\n"
+                                "\t1. Add student\n"
+                                "\t2. Remove student\n"
+                                "\t3. Search student\n"
+                                "\t4. Print All (sorted by id)\n"
+                                "\t5. Return to main menu\n";
+                        cin >> option;
+                        switch (option) {
+                            case 1:
+
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                        }
+                    }
                     break;
                 case 3:
                     break;
