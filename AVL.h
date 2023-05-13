@@ -119,17 +119,17 @@ public:
 
 
 
-    AVLNode *insert(AVLNode *node, int id)
+    AVLNode *insert(AVLNode *node, Student stud)
     {
         if(node == NULL)
             return (newNode(node->data));
-        if(id < node->data.getId())
-            node->left = insert(node->left, id);
-        else if(id > node->data.getId())
-            node->right = insert(node->right, id);
+        if(stud.getId() < node->data.getId())
+            node->left = insert(node->left, stud);
+        else if(stud.getId() > node->data.getId())
+            node->right = insert(node->right, stud);
         else
         {
-            cout << "Student with id " << id << " already exists." << endl;
+            cout << "Student with id " << stud.getId() << " already exists." << endl;
             return node;
         }
 
@@ -137,12 +137,12 @@ public:
         node->bFactor = 1 + max(bFactor(node->left), bFactor(node->right));
 
         int balanceFactor = getBalanceFactor(node);
-        if(balanceFactor > 1 && id < node->left->data.getId())
+        if(balanceFactor > 1 && stud.getId() < node->left->data.getId())
         {
             return rotateToRight(node);
         }
 
-        if(balanceFactor > 1 && id > node->left->data.getId())
+        if(balanceFactor > 1 && stud.getId() > node->left->data.getId())
         {
             node->left = rotateToLeft(node->left);
             return rotateToRight(node);
@@ -150,9 +150,9 @@ public:
 
         if (balanceFactor < -1)
         {
-            if(id > node->right->data.getId())
+            if(stud.getId() > node->right->data.getId())
                 return rotateToLeft(node);
-            else if(id < node->right->data.getId())
+            else if(stud.getId() < node->right->data.getId())
             {
                 node->right = rotateToRight(node->right);
                 return rotateToLeft(node);
@@ -242,7 +242,7 @@ public:
     }
 
 
-    void printStudent(Student st)
+    void printStudent(Student st) const
     {
         cout << "[" <<  st.getId() << ", " << st.getName() << ", " << st.getGpa() << ", " << st.getDepartment() << "]" << endl;
     }
@@ -271,9 +271,11 @@ public:
                 return search(ptr->left, id);
             }
         }
+        return ptr;
     }
 
-    void LVR(AVLNode*node)
+
+    void LVR(AVLNode*node) const
     {
         if(node == NULL)
             return;
@@ -285,7 +287,8 @@ public:
         }
     }
 
-    void printStudents()
+
+    void printStudents() const
     {
         if(size == 0)
             cout << "No student left" << endl;

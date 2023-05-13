@@ -32,7 +32,7 @@ public:
                     MaxHeap.push(stud);
                     MinHeap.push(stud);
                     bst.insert(stud);
-                    avl.insert(node, stud.getId());
+                    avl.insert(node, stud);
                     break;
                 case 1:
                     stud.setId(stoi(line));
@@ -49,9 +49,11 @@ public:
         myFile.close();
     }
 
-    void run() const {
+    void run() {
         while(true){
             int option;
+            AVLNode * node;
+            Student st;
             cout << "Choose Data Structure:\n"
                            "\t1. BST\n"
                            "\t2. AVL\n"
@@ -59,34 +61,10 @@ public:
                            "\t4. Max Heap\n"
                            "\t5. Exit Program\n";
             cin >> option;
+
             switch (option) {
                 case 1:
                     while(option != 5){
-                        cout << "Choose one of the following options:\n"
-                                "\t1. Add student\n"
-                                "\t2. Remove student\n"
-                                "\t3. Search student\n"
-                                "\t4. Print All (sorted by id)\n"
-                                "\t5. Return to main menu\n";
-                        cin >> option;
-                        switch (option) {
-                            case 1:
-                                break;
-                            case 2:
-                                break;
-                            case 3:
-                                break;
-                            case 4:
-                                bst.printStudents();
-                                break;
-                            case 5:
-                                break;
-                        }
-                    }
-                    break;
-                case 2:
-                    while (option != 5)
-                    {
                         cout << "Choose one of the following options:\n"
                                 "\t1. Add student\n"
                                 "\t2. Remove student\n"
@@ -103,8 +81,52 @@ public:
                             case 3:
                                 break;
                             case 4:
+                                bst.printStudents();
                                 break;
                             case 5:
+                                cout << "Choose Data Structure:\n"
+                                        "\t1. BST\n"
+                                        "\t2. AVL\n"
+                                        "\t3. Min Heap\n"
+                                        "\t4. Max Heap\n"
+                                        "\t5. Exit Program\n";
+                                break;
+                        }
+                    }
+                    break;
+                case 2:
+
+                    while (option != 5)
+                    {
+                        cout << "Choose one of the following options:\n"
+                                "\t1. Add student\n"
+                                "\t2. Remove student\n"
+                                "\t3. Search student\n"
+                                "\t4. Print All (sorted by id)\n"
+                                "\t5. Return to main menu\n";
+                        cin >> option;
+                        switch (option) {
+                            case 1:
+                                avl.insert(node, st);
+                                break;
+                            case 2:
+                                int id;
+                                cin >> id;
+                                avl.remove(node, id);
+                                break;
+                            case 3:
+                                avl.search(node, id);
+                                break;
+                            case 4:
+                                avl.printStudent(st);
+                                break;
+                            case 5:
+                                cout << "Choose Data Structure:\n"
+                                        "\t1. BST\n"
+                                        "\t2. AVL\n"
+                                        "\t3. Min Heap\n"
+                                        "\t4. Max Heap\n"
+                                        "\t5. Exit Program\n";
                                 break;
                         }
                     }
