@@ -118,7 +118,7 @@ public:
                                 avl.search(node, id);
                                 break;
                             case 4:
-                                avl.printStudent(st);
+                                avl.printStudents();
                                 break;
                             case 5:
                                 cout << "Choose Data Structure:\n"
