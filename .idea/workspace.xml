@@ -22,11 +22,14 @@
   <component name="ChangeListManager">
     <list default="true" id="5226953c-76ab-45c4-bb4c-42e7d2abccc7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AVL.h" beforeDir="false" afterPath="$PROJECT_DIR$/AVL.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application.h" beforeDir="false" afterPath="$PROJECT_DIR$/Application.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BST.h" beforeDir="false" afterPath="$PROJECT_DIR$/BST.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Student.h" beforeDir="false" afterPath="$PROJECT_DIR$/Student.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maxHeap.h" beforeDir="false" afterPath="$PROJECT_DIR$/maxHeap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/minHeap.h" beforeDir="false" afterPath="$PROJECT_DIR$/minHeap.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +100,10 @@
       <workItem from="1683604539474" duration="3582000" />
       <workItem from="1683637414854" duration="145000" />
       <workItem from="1683637570261" duration="274000" />
-      <workItem from="1683637892838" duration="9133000" />
+      <workItem from="1683637892838" duration="10883000" />
+      <workItem from="1683728441528" duration="346000" />
+      <workItem from="1683892384215" duration="204000" />
+      <workItem from="1684137847438" duration="13935000" />
     </task>
     <servers />
   </component>
@@ -113,14 +119,14 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>3</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/minHeap.h</url>
+          <line>59</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Application.h</url>
-          <line>42</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/main.cpp</url>
+          <line>7</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

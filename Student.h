@@ -5,6 +5,7 @@
 #include <iomanip>
 using namespace std;
 
+
 class Student {
     int ID;
     string name;
@@ -82,15 +83,21 @@ public:
         cout << "| Name: " << name << setw(24 - name.size()) << "|\n";
         cout << "| ID: " << ID << setw(26 - to_string(ID).size()) << "|\n";
         cout << "| Department: " << department << setw(18 - department.size()) << "|\n";
-        cout << "| GPA: " << gpa << setw(30 - to_string(gpa).size()) << "|\n";
+        cout << "| GPA: " << (float) gpa << setw(30 - to_string((float) gpa).size()) << "|\n";
         cout << string(31, '-') << '\n';
     }
-
     friend istream& operator>>(istream& in, Student& stud) {
         int id;
         string Name, Department;
         float GPA;
-        in >> id >> Name >> GPA >> Department;
+        cout << "Enter student ID:\n";
+        in >> id;
+        cout << "Enter student name:\n";
+        in >> Name;
+        cout << "Enter student gpa:\n";
+        in >> GPA;
+        cout << "Enter student department:\n";
+        in >> Department;
         stud.setId(id);
         stud.setName(Name);
         stud.setDepartment(Department);

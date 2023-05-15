@@ -16,9 +16,9 @@ public:
         Student temp = a[low];
         int largeIndex = 2 * low + 1;
         while(largeIndex <= high){
-            if(largeIndex < high && a[largeIndex] > a[largeIndex + 1])
+            if(largeIndex < high && a[largeIndex].getGpa() > a[largeIndex + 1].getGpa())
                 largeIndex++;
-            if(temp < a[largeIndex])
+            if(temp.getGpa() < a[largeIndex].getGpa())
                 break;
             else{
                 a[low] = a[largeIndex];
@@ -43,17 +43,41 @@ public:
 
         a[sz] = element;
         int i = sz;
-        while(i && a[i] < a[(i - 1) / 2]){
+        while(i && a[i].getGpa() < a[(i - 1) / 2].getGpa()){
             swap(a[i], a[(i - 1) / 2]);
             i = (i - 1) / 2;
         }
         sz++;
     }
 
-    void pop(){
-        a[0] = a[sz - 1];
-        sz--;
-        heapify(0, sz - 1);
+
+    void HeapSort(){
+        Student * temp = new Student[sz];
+
+        for(int i = 0; i < sz; i++) {
+            temp[i] = a[i];
+        }
+        for(int i = sz - 1; i > 0; i--){
+            swap(a[0], a[i]);
+            heapify(0, i - 1);
+        }
+        for(int i = sz - 1; i >= 0; i--){
+            a[i].printStudent();
+        }
+        for(int i = 0; i < sz; i++){
+            a[i] = temp[i];
+        }
+
+        delete[] temp;
+    }
+
+    void printStudents(){
+        if(sz){
+            HeapSort();
+        }
+        else{
+            cout << "There is no students\n";
+        }
     }
 
     Student top(){ return a[0]; }

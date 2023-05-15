@@ -14,23 +14,25 @@ struct AVLNode
     Student data;
     AVLNode * left;
     AVLNode * right;
-    int bFactor;
+    int height;
     AVLNode()
     {
         left = nullptr;
         right = nullptr;
+        height = 1;
     }
     AVLNode(Student stud)
     {
         data = move(stud);
         left = nullptr;
         right = nullptr;
+        height = 1;
     }
 };
 
 
 class AVL {
-    AVLNode *root;
+    AVLNode * root;
     int size = 0;
 
 public:
@@ -46,47 +48,49 @@ public:
     }
 
 
-    AVLNode* rotateToLeft(AVLNode *root)
+    void rotateToLeft(AVLNode * &r)
     {
         AVLNode * p;
-        if(root == NULL)
+        if(r == NULL)
         {
             cout << "Error in the tree!" << endl;
         }
-        else if(root->right == NULL)
+        else if(r->right == NULL)
         {
             cout << "No right subtree to rotate!" << endl;
         }
         else
         {
-            p = root->right;
-            root->right = p->left;
-            p->left = root;
-            root = p;
+            p = r->right;
+            r->right = p->left;
+            r->height = 1 + max(bFactor(r->left), bFactor(r->right));
+            p->left = r;
+            p->height = 1 + max(bFactor(p->left), bFactor(p->right));
+            r = p;
         }
-        return (root);
     }
 
 
-    AVLNode* rotateToRight(AVLNode *root)
+    void rotateToRight(AVLNode * &r)
     {
         AVLNode * p;
-        if(root == NULL)
+        if(r == NULL)
         {
             cout << "Error in the tree!" << endl;
         }
-        else if(root->left == NULL)
+        else if(r->left == NULL)
         {
             cout << "No left subtree to rotate!" << endl;
         }
         else
         {
-            p = root->left;
-            root->left = p->right;
-            p->right = root;
-            root = p;
+            p = r->left;
+            r->left = p->right;
+            r->height = 1 + max(bFactor(r->left), bFactor(r->right));
+            p->right = r;
+            p->height = 1 + max(bFactor(p->left), bFactor(p->right));
+            r = p;
         }
-        return (root);
     }
 
 
@@ -95,7 +99,7 @@ public:
     {
         if(n == NULL)
             return 0;
-        return n->bFactor;
+        return n->height;
     }
 
 
@@ -112,54 +116,57 @@ public:
         AVLNode *node = new AVLNode();
         node->data = st;
         node->left = node->right = NULL;
-        node->bFactor = 1;
+        node->height = 1;
         return (node);
     }
 
+    void insert(Student stud){
+        AVLNode * node = NULL;
+        insert(root, node, stud);
+    }
 
-
-
-    AVLNode *insert(AVLNode *node, Student stud)
+    void insert(AVLNode * &r, AVLNode *node, Student stud)
     {
-        if(node == NULL)
-            return (newNode(node->data));
-        if(stud.getId() < node->data.getId())
-            node->left = insert(node->left, stud);
-        else if(stud.getId() > node->data.getId())
-            node->right = insert(node->right, stud);
+        if(r == NULL){
+            r = newNode(stud);
+            size++;
+            return;
+        }
+        if(stud.getId() < r->data.getId())
+            insert(r->left, node, stud);
+        else if(stud.getId() > r->data.getId())
+            insert(r->right, node, stud);
         else
         {
             cout << "Student with id " << stud.getId() << " already exists." << endl;
-            return node;
+            return;
         }
 
 
-        node->bFactor = 1 + max(bFactor(node->left), bFactor(node->right));
+        r->height = 1 + max(bFactor(r->left), bFactor(r->right));
 
-        int balanceFactor = getBalanceFactor(node);
-        if(balanceFactor > 1 && stud.getId() < node->left->data.getId())
+        int balanceFactor = getBalanceFactor(r);
+        if(balanceFactor > 1 && stud.getId() < r->left->data.getId())
         {
-            return rotateToRight(node);
+            rotateToRight(r);
         }
 
-        if(balanceFactor > 1 && stud.getId() > node->left->data.getId())
+        if(balanceFactor > 1 && stud.getId() > r->left->data.getId())
         {
-            node->left = rotateToLeft(node->left);
-            return rotateToRight(node);
+            rotateToLeft(r->left);
+            rotateToRight(r);
         }
 
         if (balanceFactor < -1)
         {
-            if(stud.getId() > node->right->data.getId())
-                return rotateToLeft(node);
-            else if(stud.getId() < node->right->data.getId())
+            if(stud.getId() > r->right->data.getId())
+                rotateToLeft(r);
+            else if(stud.getId() < r->right->data.getId())
             {
-                node->right = rotateToRight(node->right);
-                return rotateToLeft(node);
+                rotateToRight(r->right);
+                rotateToLeft(r);
             }
         }
-        size++;
-        return node;
     }
 
 
@@ -171,33 +178,41 @@ public:
         return curr;
     }
 
+    void remove(int id){
+        AVLNode *node = NULL;
+        remove(root, id);
+    }
 
-    AVLNode* remove(AVLNode *node, int id)
+    void remove(AVLNode * &node, int id)
     {
-        if(node == NULL)
-            return node;
+        if(node == NULL){
+            cout << "There is no student with id " << id << '\n';
+            return;
+        }
         if(id < node->data.getId())
         {
-            node->left = remove(node->left, id);
+            remove(node->left, id);
         }
         else if(id > node->data.getId())
         {
-            node->right = remove(node->right, id);
+            remove(node->right, id);
         }
         else
         {
             if((node->left == NULL) || (node->right == NULL))
             {
-                AVLNode* t;
+                AVLNode * t;
+                t = NULL;
                 if(node->left)
                     t = node->left;
-                else
+                else if(node->right)
                     t = node->right;
 
                 if(t == NULL)
                 {
                     t = node;
                     node = NULL;
+                    delete t;
                 }
                 else
                 {
@@ -207,71 +222,66 @@ public:
             }
             else
             {
-                AVLNode* temp = minimumNode(node->right);
-                node->data = temp->data;
-                node->right = remove(node->right, id);
+                Student stud = minimumNode(node->right)->data;
+                remove(node->right, stud.getId());
+                node->data = stud;
+                size++;
             }
+            size--;
         }
-        if (node == NULL)
-            return node;
-
-        node->bFactor = 1 + max(bFactor(node->left), bFactor(node->right));
+        if(node == NULL)
+            return;
+        node->height = 1 + max(bFactor(node->left), bFactor(node->right));
 
         int balanceFactor = getBalanceFactor(node);
 
         if(balanceFactor > 1 && getBalanceFactor(node->left) < 0)
         {
-            node->left = rotateToLeft(node->left);
-            return rotateToRight(node);
+            rotateToLeft(node->left);
+            rotateToRight(node);
         }
 
         if(balanceFactor > 1 && getBalanceFactor(node->left) >= 0)
-            return rotateToRight(node);
+            rotateToRight(node);
 
         if(balanceFactor < -1 && getBalanceFactor(node->right) > 0)
         {
-            node->right = rotateToRight(node->right);
-            return rotateToLeft(node);
+            rotateToRight(node->right);
+            rotateToLeft(node);
         }
 
         if(balanceFactor < -1 && getBalanceFactor(node->right) <= 0)
-            return rotateToLeft(node);
-
-        size--;
-        return node;
+            rotateToLeft(node);
     }
 
 
-    void printStudent(Student st) const
-    {
-        cout << "[" <<  st.getId() << ", " << st.getName() << ", " << st.getGpa() << ", " << st.getDepartment() << "]" << endl;
+    void search(int id){
+        search(root, id);
     }
 
-
-    AVLNode* search(AVLNode* ptr, int id)
+    void search(AVLNode* ptr, int id)
     {
         if(ptr == NULL)
         {
             cout << id << " was not found!" << endl;
-            return ptr;
+            return;
         }
         if(ptr->data.getId() == id)
         {
             cout << id << " was found!" << endl;
-            printStudent(ptr->data);
+            ptr->data.printStudent();
         }
         else
         {
             if(id > ptr->data.getId())
             {
-                return search(ptr->right, id);
+                search(ptr->right, id);
             }
             else if(id < ptr->data.getId())
             {
-                return search(ptr->left, id);
+                search(ptr->left, id);
             }
         }
-        return ptr;
     }
 
 
@@ -282,7 +292,7 @@ public:
         else
         {
             LVR(node->left);
-            printStudent(node->data);
+            node->data.printStudent();
             LVR(node->right);
         }
     }

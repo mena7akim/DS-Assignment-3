@@ -131,6 +131,29 @@ public:
         }
     }
 
+    void search(int id) {
+        search(root, id);
+    }
+
+    void search(BSTNode * root, int id) {
+        if(root == NULL){
+            cout << "There is no student with this id\n";
+            return;
+        }
+
+        if(root->data.getId() < id){
+            search(root->right, id);
+        }
+        else if(root->data.getId() > id){
+            search(root->left, id);
+        }
+        else{
+            cout << "Student is found.\n";
+            root->data.printStudent();
+            return;
+        }
+    }
+
     void dfs(BSTNode * r) const {
         if(r == nullptr)
             return;
